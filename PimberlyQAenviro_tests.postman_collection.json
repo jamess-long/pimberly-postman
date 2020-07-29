@@ -1,0 +1,3376 @@
+{
+	"info": {
+		"_postman_id": "d93e46c7-00fb-43b2-84fb-267b6e316969",
+		"name": "PimberlyQAenviro_tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Active",
+			"item": [
+				{
+					"name": "001 Creates, Updates, Gets and Deletes a Product",
+					"item": [
+						{
+							"name": "Create a product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0bb5a4bf-4dee-4884-a988-d9ed3edb7097",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows created product Primary ID\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Created API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"API_test_product\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{001_FeedAPIKey}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"primaryId\":\"API_test_product\",\n  \"typeId\":\"SKU\",\n  \"schemaId\": \"{{001_SchemaID}}\"\n  }\n\n\n",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products",
+									"host": [
+										"{{URL_VERSION}}products"
+									]
+								},
+								"description": "Create a product using the API"
+							},
+							"response": []
+						},
+						{
+							"name": "Update product by PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0b75b34c-da1d-469c-ad5a-d1e2daf474d6",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows product thats been updated\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Updated API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"Id is exists\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.id).to.exist;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{001_FeedAPIKey}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"PrimaryDescription\": \"Updating the description via API\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products/API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"API_test_product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get product by Primary ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dee55130-643a-4d37-ae60-4868bf38669d",
+										"exec": [
+											"pm.test(\"Primary ID is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData['Primary ID']).to.eql(\"API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"Primary Description Attribute is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData['Primary Description Attribute']).to.eql(\"Updating the description via API\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.primaryId).to.eql(\"API_test_product\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"ID is present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData._id).to.not.be.empty;",
+											"});",
+											"",
+											"pm.test(\"dateCreated is present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.dateCreated).to.not.be.empty;",
+											"});",
+											"",
+											"pm.test(\"dateUpdated is present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.dateUpdated).to.not.be.empty;",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{001_ChannelAPIKey}}"
+									},
+									{
+										"key": "extendResponse",
+										"type": "text",
+										"value": "1"
+									},
+									{
+										"key": "attributes",
+										"type": "text",
+										"value": "*"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"API_test_product"
+									]
+								},
+								"description": "Gets product by Primary ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product By PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9ea27bdd-d932-414a-ae2b-9f956da13a1f",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(200);",
+											"});",
+											"",
+											"pm.test(\"message shows the deleted product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Deleted product: API_test_product\");",
+											"",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{001_FeedAPIKey}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"API_test_product"
+									]
+								},
+								"description": "Deletes a product using the primary ID "
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1299d6e5-11de-4ae5-8a5e-5419723f67ca",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f4b2470-eba7-4453-9015-4bf4e69cd225",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "002 Creates a Product with all attributes populated, Gets all attributes and Deletes the Product ",
+					"item": [
+						{
+							"name": "Create a product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "627ff57f-6641-401c-a79b-78a9b9985a31",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows created product Primary ID\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Created API_test_product_all_attributes\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"API_test_product_all_attributes\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{002_FeedAPIKey}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"primaryId\":\"API_test_product_all_attributes\",\n  \"typeId\":\"SKU\",\n  \"schemaId\":\"{{002_SchemaID}}\",\n  \"attributes\" : {\n\t\t \"PrimaryDescription\": \"Updating the description via API\",\n\t\t  \"PlainTextShortRegular\": \"Text1\",\n\t\t  \"PlainTextShortFreeTypedList\": [\"Text1\",\"Text2\"],\n\t\t  \"PlainTextShortSingleSelectList\": \"value1\",\n\t\t  \"PlainTextShortMultiSelectList\": [\"value1\",\"value2\"], \n\t\t  \"PlainTextShortComboList\": \"value1\",\n\t\t  \"PlainTextShortSingleSelectDataset\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextShortMultiSelectDataset\": [\"ValueDEFAULT1\",\"ValueDEFAULT2\"],\n\t\t  \"PlainTextShortMultiComboList\": [\"freevalue\",\"value1\"],\n\t\t  \"PlainTextShortComboDataset\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextShortMultiComboDataset\": [\"freevalue\",\"ValueDEFAULT1\"],\n\t\t  \"PlainTextShortKeyValuePairs\": { \"key1\": \"value1\" },\n\t\t  \"PlainTextLongRegular\": \"TextLong1\",\n\t\t  \"Table\" : \"Table\",\n\t\t  \"CodeRegular\": \"ABC123\",\n\t\t  \"HTMLRegular\": \"<p>Text1</p>\",\n\t\t  \"NumberRegular\": 1,\n\t\t  \"NumberFreeTypedList\": [111,1],\n\t\t  \"NumberSingleSelectList\": 1,\n\t\t  \"NumberMultiSelectList\": [11,22],\n\t\t  \"NumberComboList\": 1,\n\t\t  \"NumberMultiComboList\": [11,22],\n\t\t  \"NumberSingleSelectDataset\": 1,\n\t\t  \"NumberComboDataset\": 1,\n\t\t  \"NumberMultiSelectDataset\": [1,2],\n\t\t  \"NumberMultiComboDataset\": [1,2],\n\t\t  \"CurrencyRegular\": 1.5,\n\t\t  \"MeasureRegular\": 1,\n\t\t  \"DateRegular\": \"2019-07-19\",\n\t\t  \"TimeRegular\": \"11:00\",\n\t\t  \"DateTimeRegular\": \"2019-07-19T11:00:00.000Z\",\n\t\t  \"TrueorFalseRegular\": true,\n\t\t  \"MediaSet\": \"5da5a3f0688c5a30a1bff4f7\",\n\t\t  \"ProductSet\": \"5dc136f496ebf800172307f8\",\n\t\t  \"URL\": \"test.com\",\n\t\t  \"FreeTypeURL\": [\"test1.com\",\"test2.com\"]\n\t}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products",
+									"host": [
+										"{{URL_VERSION}}products"
+									]
+								},
+								"description": "PROD Create a product using the API"
+							},
+							"response": []
+						},
+						{
+							"name": "Get product by Primary ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4f4fea80-ca41-4fe8-9e67-3d4c5d8cc6ab",
+										"exec": [
+											"pm.test(\"Primary ID is showing API_test_product_all_attributes\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['Primary ID']).to.eql(\"API_test_product_all_attributes\");",
+											"});",
+											"",
+											"pm.test(\"Primary Description Attribute is showing Updating the description via API\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['Primary Description Attribute']).to.eql(\"Updating the description via API\");",
+											"});",
+											"",
+											"",
+											"//TESTING ATTRIBUTES ",
+											"",
+											"",
+											"//Plain Text ",
+											"",
+											"pm.test(\"PlainTextShortRegular is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortRegular).to.eql(\"Text1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortFreeTypedList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"Text1\", \"Text2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortFreeTypedList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortFreeTypedList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortSingleSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortSingleSelectList).to.eql(\"value1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortMultiSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"value1\", \"value2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortMultiSelectList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortMultiSelectList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextShortComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortComboList).to.eql(\"value1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextShortMultiComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"freevalue\", \"value1\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortMultiComboList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortMultiComboList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortSingleSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortSingleSelectDataset).to.eql(\"ValueDEFAULT1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortSingleSelectDataset).to.eql(\"ValueDEFAULT1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextShortMultiSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"ValueDEFAULT1\", \"ValueDEFAULT2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortMultiSelectDataset.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortMultiSelectDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextShortMultiComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"freevalue\", \"ValueDEFAULT1\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortMultiComboDataset.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortMultiComboDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"PlainTextShortKeyValuePairs is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['PlainTextShortKey/ValuePairs'][0]).to.eql(\"value1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextLongRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextLongRegular).to.eql(\"TextLong1\");",
+											"});",
+											"",
+											"",
+											"",
+											"// CODE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CodeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CodeRegular).to.eql(\"ABC123\");",
+											"});",
+											"",
+											"// TABLE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"Table is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.Table).to.eql(\"Table\");",
+											"});",
+											"",
+											"",
+											"// HTML ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"HTMLRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.HTMLRegular).to.eql(\"<p>Text1</p>\");",
+											"});",
+											"",
+											"",
+											"",
+											"//NUMBER ATTRIBUTES",
+											"",
+											"pm.test(\"NumberRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberRegular).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberFreeTypedList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [111, 1];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberFreeTypedList.length; i++) {",
+											"        pm.expect(jsonData.NumberFreeTypedList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberSingleSelectList is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberSingleSelectList).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberMultiSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [11, 22];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberMultiSelectList.length; i++) {",
+											"        pm.expect(jsonData.NumberMultiSelectList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberComboList is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberComboList).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberMultiComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [11, 22];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberMultiComboList.length; i++) {",
+											"        pm.expect(jsonData.NumberMultiComboList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"NumberSingleSelectDataset is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberComboList).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberComboDataset is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberComboDataset).to.eql(1);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"NumberMultiSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [1, 2];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberMultiSelectDataset.length; i++) {",
+											"        pm.expect(jsonData.NumberMultiSelectDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberMultiComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [1, 2];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberMultiComboDataset.length; i++) {",
+											"        pm.expect(jsonData.NumberMultiComboDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"// CURRENCY ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CurrencyRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CurrencyRegular).to.eql(\"1.50\");",
+											"});",
+											"",
+											"",
+											"// MEASURE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"MeasureRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MeasureRegular).to.eql(1);",
+											"});",
+											"",
+											"",
+											"//DATE AND TIME ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"DateRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.DateRegular).to.eql(\"2019/07/19\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"TimeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TimeRegular).to.eql(\"11:00\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"DateTimeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[\"Date+TimeRegular\"]).to.eql(\"2019/07/19 11:00\");",
+											"});",
+											"",
+											"",
+											"",
+											"//BOOLEAN ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"TrueorFalseRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TrueorFalseRegular).to.eql(\"1\");",
+											"});",
+											"",
+											"",
+											"// MEDIA SET ",
+											"",
+											"",
+											"pm.test(\"MediaSet is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MediaSet[0]).to.eql(\"https://cdn.preview.pimber.ly/public/asset/raw/5a0edc61963a45000e888630/7d531b65/5d7607c08dcb2b5efa000010.jpg\");",
+											"});",
+											"",
+											"",
+											"// PRODUCT SET ",
+											"",
+											"",
+											"pm.test(\"ProductSet is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.ProductSet[0]).to.eql(\"DNDProductToBeAdded\");",
+											"});",
+											"",
+											"",
+											"",
+											"//URL ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"URL is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.URL).to.eql(\"test.com\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"FreeTypeURL is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"test1.com\", \"test2.com\"];",
+											"",
+											"    for (var i = 0; i < jsonData.FreeTypeURL.length; i++) {",
+											"        pm.expect(jsonData.FreeTypeURL[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"followRedirects": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{002_ChannelAPIKey}}"
+									},
+									{
+										"key": "extendResponse",
+										"type": "text",
+										"value": "1"
+									},
+									{
+										"key": "attributes",
+										"type": "text",
+										"value": "*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products/API_test_product_all_attributes",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"API_test_product_all_attributes"
+									]
+								},
+								"description": "Gets product by Primary ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product By PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cfa8caf0-8588-417f-9205-28b148940f02",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(200);",
+											"});",
+											"",
+											"pm.test(\"message shows the deleted product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Deleted product: API_test_product_all_attributes\");",
+											"",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{002_FeedAPIKey}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/API_test_product_all_attributes",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"API_test_product_all_attributes"
+									]
+								},
+								"description": "Deletes a product using the primary ID "
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9833161f-bb6d-4b65-907c-3bc608361ff0",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "73345e83-f960-4791-a3bc-32eae85edd21",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "003 Creates a Product then updates all attributes, Gets all attributes and Deletes a Product",
+					"item": [
+						{
+							"name": "Create a product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "da747f73-2707-4630-b867-92ca9a86a817",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows created product Primary ID\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Created API_test_product_update_all_attributes\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"API_test_product_update_all_attributes\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{003_FeedAPIKey}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"primaryId\":\"API_test_product_update_all_attributes\",\n  \"typeId\":\"SKU\",\n  \"schemaId\":\"{{003_SchemaID}}\"\n  \n }\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products",
+									"host": [
+										"{{URL_VERSION}}products"
+									]
+								},
+								"description": "Create a product using the API"
+							},
+							"response": []
+						},
+						{
+							"name": "Update product by PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5de390b0-12aa-4cf4-95e5-95b4959f1e48",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows product thats been updated\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Updated API_test_product_update_all_attributes\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"API_test_product_update_all_attributes\");",
+											"});",
+											"",
+											"pm.test(\"id exists\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.id).to.exist;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{003_FeedAPIKey}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"PrimaryDescription\": \"Updating the description via API\",\n\t\t  \"PlainTextShortRegular\": \"Text1\",\n\t\t  \"PlainTextShortFreeTypedList\": [\"Text1\",\"Text2\"],\n\t\t  \"PlainTextShortSingleSelectList\": \"value1\",\n\t\t  \"PlainTextShortMultiSelectList\": [\"value1\",\"value2\"], \n\t\t  \"PlainTextShortComboList\": \"value1\",\n\t\t  \"PlainTextShortSingleSelectDataset\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextShortMultiSelectDataset\": [\"ValueDEFAULT1\",\"ValueDEFAULT2\"],\n\t\t  \"PlainTextShortMultiComboList\": [\"freevalue\",\"value1\"],\n\t\t  \"PlainTextShortComboDataset\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextShortMultiComboDataset\": [\"freevalue\",\"ValueDEFAULT1\"],\n\t\t  \"PlainTextShortKeyValuePairs\": { \"key1\": \"value1\" },\n\t\t  \"PlainTextLongRegular\": \"TextLong1\",\n\t\t  \"Table\" : \"Table\",\n\t\t  \"CodeRegular\": \"ABC123\",\n\t\t  \"HTMLRegular\": \"<p>Text1</p>\",\n\t\t  \"NumberRegular\": 1,\n\t\t  \"NumberFreeTypedList\": [111,1],\n\t\t  \"NumberSingleSelectList\": 1,\n\t\t  \"NumberMultiSelectList\": [11,22],\n\t\t  \"NumberComboList\": 1,\n\t\t  \"NumberMultiComboList\": [11,22],\n\t\t  \"NumberSingleSelectDataset\": 1,\n\t\t  \"NumberComboDataset\": 1,\n\t\t  \"NumberMultiSelectDataset\": [1,2],\n\t\t  \"NumberMultiComboDataset\": [1,2],\n\t\t  \"CurrencyRegular\": 1.5,\n\t\t  \"MeasureRegular\": 1,\n\t\t  \"DateRegular\": \"2019-07-19\",\n\t\t  \"TimeRegular\": \"11:00\",\n\t\t  \"DateTimeRegular\": \"2019-07-19T11:00:00.000Z\",\n\t\t  \"TrueorFalseRegular\": true,\n\t\t  \"MediaSet\": \"5da5a3f0688c5a30a1bff4f7\",\n\t\t  \"ProductSet\": \"5dc136f496ebf800172307f8\",\n\t\t  \"URL\": \"test.com\",\n\t\t  \"FreeTypeURL\": [\"test1.com\",\"test2.com\"]\n \n  \n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products/API_test_product_update_all_attributes",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"API_test_product_update_all_attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get product by Primary ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "aaa87b10-4a04-4b07-a44f-dec6bdf28ee8",
+										"exec": [
+											"pm.test(\"Primary ID is showing API_test_product_all_attributes\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['Primary ID']).to.eql(\"API_test_product_update_all_attributes\");",
+											"});",
+											"",
+											"pm.test(\"Primary Description Attribute is showing Updating the description via API\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['Primary Description Attribute']).to.eql(\"Updating the description via API\");",
+											"});",
+											"",
+											"",
+											"//TESTING ATTRIBUTES ",
+											"",
+											"",
+											"//Plain Text ",
+											"",
+											"pm.test(\"PlainTextShortRegular is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortRegular).to.eql(\"Text1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortFreeTypedList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"Text1\", \"Text2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortFreeTypedList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortFreeTypedList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortSingleSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortSingleSelectList).to.eql(\"value1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortMultiSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"value1\", \"value2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortMultiSelectList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortMultiSelectList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextShortComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortComboList).to.eql(\"value1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextShortMultiComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"freevalue\", \"value1\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortMultiComboList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortMultiComboList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortSingleSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortSingleSelectDataset).to.eql(\"ValueDEFAULT1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextShortComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextShortSingleSelectDataset).to.eql(\"ValueDEFAULT1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextShortMultiSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"ValueDEFAULT1\", \"ValueDEFAULT2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortMultiSelectDataset.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortMultiSelectDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextShortMultiComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"freevalue\", \"ValueDEFAULT1\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextShortMultiComboDataset.length; i++) {",
+											"        pm.expect(jsonData.PlainTextShortMultiComboDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"PlainTextShortKeyValuePairs is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['PlainTextShortKey/ValuePairs'][0]).to.eql(\"value1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextLongRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextLongRegular).to.eql(\"TextLong1\");",
+											"});",
+											"",
+											"",
+											"",
+											"// CODE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CodeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CodeRegular).to.eql(\"ABC123\");",
+											"});",
+											"",
+											"// TABLE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"Table is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.Table).to.eql(\"Table\");",
+											"});",
+											"",
+											"",
+											"// HTML ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"HTMLRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.HTMLRegular).to.eql(\"<p>Text1</p>\");",
+											"});",
+											"",
+											"",
+											"",
+											"//NUMBER ATTRIBUTES",
+											"",
+											"pm.test(\"NumberRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberRegular).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberFreeTypedList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [111, 1];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberFreeTypedList.length; i++) {",
+											"        pm.expect(jsonData.NumberFreeTypedList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberSingleSelectList is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberSingleSelectList).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberMultiSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [11, 22];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberMultiSelectList.length; i++) {",
+											"        pm.expect(jsonData.NumberMultiSelectList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberComboList is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberComboList).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberMultiComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [11, 22];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberMultiComboList.length; i++) {",
+											"        pm.expect(jsonData.NumberMultiComboList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"NumberSingleSelectDataset is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberComboList).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberComboDataset is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberComboDataset).to.eql(1);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"NumberMultiSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [1, 2];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberMultiSelectDataset.length; i++) {",
+											"        pm.expect(jsonData.NumberMultiSelectDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberMultiComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [1, 2];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberMultiComboDataset.length; i++) {",
+											"        pm.expect(jsonData.NumberMultiComboDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"// CURRENCY ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CurrencyRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CurrencyRegular).to.eql(\"1.50\");",
+											"});",
+											"",
+											"",
+											"// MEASURE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"MeasureRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MeasureRegular).to.eql(1);",
+											"});",
+											"",
+											"",
+											"//DATE AND TIME ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"DateRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.DateRegular).to.eql(\"2019/07/19\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"TimeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TimeRegular).to.eql(\"11:00\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"DateTimeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[\"Date+TimeRegular\"]).to.eql(\"2019/07/19 11:00\");",
+											"});",
+											"",
+											"",
+											"",
+											"//BOOLEAN ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"TrueorFalseRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TrueorFalseRegular).to.eql(\"1\");",
+											"});",
+											"",
+											"",
+											"// MEDIA SET ",
+											"",
+											"",
+											"pm.test(\"MediaSet is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MediaSet[0]).to.eql(\"https://cdn.preview.pimber.ly/public/asset/raw/5a0edc61963a45000e888630/7d531b65/5d7607c08dcb2b5efa000010.jpg\");",
+											"});",
+											"",
+											"",
+											"// PRODUCT SET ",
+											"",
+											"",
+											"pm.test(\"ProductSet is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.ProductSet[0]).to.eql(\"DNDProductToBeAdded\");",
+											"});",
+											"",
+											"",
+											"",
+											"//URL ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"URL is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.URL).to.eql(\"test.com\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"FreeTypeURL is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"test1.com\", \"test2.com\"];",
+											"",
+											"    for (var i = 0; i < jsonData.FreeTypeURL.length; i++) {",
+											"        pm.expect(jsonData.FreeTypeURL[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{003_ChannelAPIKey}}"
+									},
+									{
+										"key": "extendResponse",
+										"type": "text",
+										"value": "1"
+									},
+									{
+										"key": "attributes",
+										"type": "text",
+										"value": "*"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/API_test_product_update_all_attributes",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"API_test_product_update_all_attributes"
+									]
+								},
+								"description": "Gets product by Primary ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product By PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6b1da765-eae1-4665-94ea-e6596d006153",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(200);",
+											"});",
+											"",
+											"pm.test(\"message shows the deleted product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Deleted product: API_test_product_update_all_attributes\");",
+											"",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{003_FeedAPIKey}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/API_test_product_update_all_attributes",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"API_test_product_update_all_attributes"
+									]
+								},
+								"description": "Deletes a product using the primary ID "
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d3bd36e7-451c-4ee8-a8d3-159a4d9a4801",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "4852f7e3-4c02-4175-bc97-250ad82e2281",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "004  Creates, Updates Product Type, and Deletes",
+					"item": [
+						{
+							"name": "Create a product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "99915c77-c926-477e-a60e-ff75661120d3",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows created product Primary ID\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Created 04API_test_product_typeID\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"04API_test_product_typeID\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{004_FeedAPIKey}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"primaryId\":\"04API_test_product_typeID\",\n  \"typeId\":\"SKU\",\n  \"schemaId\":\"5dc161cb96ebf800172308aa\"\n  }\n",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products",
+									"host": [
+										"{{URL_VERSION}}products"
+									]
+								},
+								"description": "Create a product using the API"
+							},
+							"response": []
+						},
+						{
+							"name": "Update product by PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d74bca96-ea8e-409c-bc57-d43415948a3e",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows product thats been updated\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Updated 04API_test_product_typeID\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"04API_test_product_typeID\");",
+											"});",
+											"",
+											"pm.test(\"Id is exists\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.id).to.exist;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{004_FeedAPIKey}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"typeId\": \"Item Group\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products/04API_test_product_typeID",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"04API_test_product_typeID"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get product by Primary ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b865c005-3d7b-4325-b0d1-92c0577ddd90",
+										"exec": [
+											"pm.test(\"Primary ID is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData['Primary ID']).to.eql(\"04API_test_product_typeID\");",
+											"});",
+											"",
+											"pm.test(\"Product Type is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData['Product Type']).to.eql(\"Item Group\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.primaryId).to.eql(\"04API_test_product_typeID\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"ID is present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData._id).to.not.be.empty;",
+											"});",
+											"",
+											"pm.test(\"dateCreated is present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.dateCreated).to.not.be.empty;",
+											"});",
+											"",
+											"pm.test(\"dateUpdated is present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.dateUpdated).to.not.be.empty;",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{004_ChannelAPIKey}}"
+									},
+									{
+										"key": "extendResponse",
+										"type": "text",
+										"value": "1"
+									},
+									{
+										"key": "attributes",
+										"type": "text",
+										"value": "*"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/04API_test_product_typeID",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"04API_test_product_typeID"
+									]
+								},
+								"description": "Gets product by Primary ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product By PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f3be80ce-ab89-4773-8ae4-8ea47d4bb2ae",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(200);",
+											"});",
+											"",
+											"pm.test(\"message shows the deleted product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Deleted product: 04API_test_product_typeID\");",
+											"",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{004_FeedAPIKey}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/04API_test_product_typeID",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"04API_test_product_typeID"
+									]
+								},
+								"description": "Deletes a product using the primary ID "
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "83c3197b-a096-436c-a582-5e1f79136801",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "fd80e8e2-9365-4d16-b0f8-97139d0ab23c",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "005 Creates, Updates Schema, and Deletes",
+					"item": [
+						{
+							"name": "Create a product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a76e1e4a-08c6-48c6-a387-27353ba4508f",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows created product Primary ID\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Created 05API_test_product_schemaID\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"05API_test_product_schemaID\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{005_FeedAPIKey}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"primaryId\":\"05API_test_product_schemaID\",\n  \"typeId\":\"SKU\",\n  \"schemaId\":\"{{005_SchemaID}}\",\n  \"attributes\" : {\n  \n  \"PlainTextShortRegular\": \"RemoveMe\"\n  \t\n  \t\n  }\n  }\n"
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products",
+									"host": [
+										"{{URL_VERSION}}products"
+									]
+								},
+								"description": "Create a product using the API"
+							},
+							"response": []
+						},
+						{
+							"name": "Update product by PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8d763c01-221b-4c8e-a21b-ca533317163d",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows product thats been updated\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Updated 05API_test_product_schemaID\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"05API_test_product_schemaID\");",
+											"});",
+											"",
+											"pm.test(\"Id is exists\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.id).to.exist;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "ZceoP5fgOsWDft3CHZ0e8eliTNnPIPqSBxKaBkZpD4ZSB3d3aKNQZ9IBskRIrdon",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"schemaId\": \"{{001_SchemaID}}\"\n}"
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products/05API_test_product_schemaID",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"05API_test_product_schemaID"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get product by Primary ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f8ffe041-4795-44bc-af31-32e349f7eccc",
+										"exec": [
+											"pm.test(\"Primary ID is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData['Primary ID']).to.eql(\"05API_test_product_schemaID\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.primaryId).to.eql(\"05API_test_product_schemaID\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"ID is present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData._id).to.not.be.empty;",
+											"});",
+											"",
+											"pm.test(\"dateCreated is present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.dateCreated).to.not.be.empty;",
+											"});",
+											"",
+											"pm.test(\"dateUpdated is present\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.dateUpdated).to.not.be.empty;",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{005_ChannelAPIKey}}"
+									},
+									{
+										"key": "extendResponse",
+										"type": "text",
+										"value": "1"
+									},
+									{
+										"key": "attributes",
+										"type": "text",
+										"value": "*"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/05API_test_product_schemaID",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"05API_test_product_schemaID"
+									]
+								},
+								"description": "Gets product by Primary ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product By PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "71effcb4-11de-4bfb-91c9-38e405ac1eb5",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(200);",
+											"});",
+											"",
+											"pm.test(\"message shows the deleted product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Deleted product: 05API_test_product_schemaID\");",
+											"",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{005_FeedAPIKey}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/05API_test_product_schemaID",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"05API_test_product_schemaID"
+									]
+								},
+								"description": "Deletes a product using the primary ID "
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4a4b25fd-a167-4f58-b225-fb3ca5423e2e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "57b07c0b-66f8-4572-a7f1-42b765c3c532",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "006 All attributes with a source of ANY can be populated via API Feed A",
+					"item": [
+						{
+							"name": "Create a product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "aaea99dc-a347-4dc0-b7b8-8dbbde88d344",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows created product Primary ID\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Created 006_API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"006_API_test_product\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{FEED_A_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"primaryId\":\"006_API_test_product\",\n  \"typeId\":\"SKU\",\n  \"schemaId\":\"{{006_SchemaID}}\",\n  \"attributes\" : {\n  \t\n  \t\"PrimaryDescription\" : \"Updated\"\n  \t\n  \t\n  }\n\n\n\n  \n }\n"
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products",
+									"host": [
+										"{{URL_VERSION}}products"
+									]
+								},
+								"description": "Create a product using the API"
+							},
+							"response": []
+						},
+						{
+							"name": "Update product by PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f4f62bae-d6e0-40cb-a443-67e2ab61c9dd",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows product thats been updated\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Updated 006_API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"006_API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"id exists\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.id).to.exist;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{FEED_A_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \n\t\t  \"PlainTextRegular006\": \"Text1\",\n\t\t  \"PlainTextFreeTypedList006\": [\"Text1\",\"Text2\"],\n\t\t  \"PlainTextSingleSelectList006\": \"value1\",\n\t\t  \"PlainTextMultiSelectList006\": [\"value1\",\"value2\"], \n\t\t  \"PlainTextComboList006\": \"value1\",\n\t\t  \"PlainTextSingleSelectDataset006\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextMultiSelectDataset006\": [\"ValueDEFAULT1\",\"ValueDEFAULT2\"],\n\t\t  \"PlainTextMultiComboList006\": [\"freevalue\",\"value1\"],\n\t\t  \"PlainTextComboDataset006\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextMultiComboDataset006\": [\"freevalue\",\"ValueDEFAULT1\"],\n\t\t  \"PlainTextKeyValuePairs006\": { \"key1\": \"value1\" },\n\t\t  \"Table006\" : \"Table\", \n\t\t  \"CodeRegular006\": \"ABC123\",\n\t\t  \"HTMLRegular006\": \"<p>Text1</p>\",\n\t\t  \"NumberRegular006\": 1,\n\t\t  \"NumberFreeTypedList006\": [111,1],\n\t\t  \"NumberSingleSelectDataset006\": 1,\n\t\t  \"CurrencyRegular006\": 1.5,\n\t\t  \"MeasureWeightgRegular006\": 1,\n\t\t  \"DateRegular006\": \"2019-07-19\",\n\t\t  \"TimeRegular006\": \"11:00\",\n\t\t  \"DateTimeRegular006\": \"2019-07-19T11:00:00.000Z\",\n\t\t  \"TrueorFalseRegular006\": true,\n\t\t  \"MediaSet006\": \"5da5a3f0688c5a30a1bff4f7\",\n\t\t  \"ProductSet006\": \"5dc136f496ebf800172307f8\",\n\t\t  \"URL006\": \"test.com\",\n\t\t  \"FreeTypeURL006\": [\"test1.com\",\"test2.com\"]\n \n  \n}"
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products/006_API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"006_API_test_product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get product by Primary ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ce3d836a-a2b2-48c2-9222-0c4e298cc799",
+										"exec": [
+											"pm.test(\"Primary ID is showing 006_API_test_product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['Primary ID']).to.eql(\"006_API_test_product\");",
+											"});",
+											"",
+											"//TESTING ATTRIBUTES ",
+											"",
+											"",
+											"//Plain Text ",
+											"",
+											"pm.test(\"PlainTextRegular is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextRegular).to.eql(\"Text1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextFreeTypedList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"Text1\", \"Text2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextFreeTypedList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextFreeTypedList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"PlainTextSingleSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextSingleSelectList).to.eql(\"value1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextMultiSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"value1\", \"value2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextMultiSelectList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextMultiSelectList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextComboList).to.eql(\"value1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextMultiComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"freevalue\", \"value1\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextMultiComboList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextMultiComboList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"PlainTextSingleSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextSingleSelectDataset).to.eql(\"ValueDEFAULT1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextComboDataset).to.eql(\"ValueDEFAULT1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextMulitSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"ValueDEFAULT1\", \"ValueDEFAULT2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextMultiSelectDataset.length; i++) {",
+											"        pm.expect(jsonData.PlainTextMultiSelectDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextMultiComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"freevalue\", \"ValueDEFAULT1\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextMultiComboDataset.length; i++) {",
+											"        pm.expect(jsonData.PlainTextMultiComboDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextKey/ValuePairs is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['PlainTextKey/ValuePairs']['key1']).is.to.equal(\"value1\");",
+											"});",
+											"",
+											"",
+											"",
+											"// CODE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CodeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CodeRegular).to.eql(\"ABC123\");",
+											"});",
+											"",
+											"// TABLE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"Table is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.Table).to.eql(\"Table\");",
+											"});",
+											"",
+											"",
+											"// HTML ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"HTMLRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.HTMLRegular).to.eql(\"<p>Text1</p>\");",
+											"});",
+											"",
+											"",
+											"",
+											"//NUMBER ATTRIBUTES",
+											"",
+											"pm.test(\"NumberRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberRegular).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberFreeTypedList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [111, 1];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberFreeTypedList.length; i++) {",
+											"        pm.expect(jsonData.NumberFreeTypedList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"pm.test(\"NumberSingleSelectDataset is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberSingleSelectDataset).to.eql(1);",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"// CURRENCY ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CurrencyRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CurrencyRegular).to.eql(\"1.50\");",
+											"});",
+											"",
+											"",
+											"// MEASURE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"MeasureRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MeasureRegular).to.eql(1);",
+											"});",
+											"",
+											"",
+											"//DATE AND TIME ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"DateRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.DateRegular).to.eql(\"2019/07/19\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"TimeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TimeRegular).to.eql(\"11:00\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"DateTimeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[\"Date + Time\"]).to.eql(\"2019/07/19 11:00\");",
+											"});",
+											"",
+											"",
+											"",
+											"//BOOLEAN ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"TrueorFalseRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TrueorFalseRegular).to.eql(\"1\");",
+											"});",
+											"",
+											"",
+											"// MEDIA SET ",
+											"",
+											"",
+											"pm.test(\"MediaSet is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MediaSet[0]).to.eql(\"https://cdn.preview.pimber.ly/public/asset/raw/5a0edc61963a45000e888630/7d531b65/5d7607c08dcb2b5efa000010.jpg\");",
+											"});",
+											"",
+											"",
+											"// PRODUCT SET ",
+											"",
+											"",
+											"pm.test(\"ProductSet is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.ProductSet[0]).to.eql(\"DNDProductToBeAdded\");",
+											"});",
+											"",
+											"",
+											"",
+											"//URL ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"URL is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.URL).to.eql(\"test.com\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"FreeTypeURL is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"test1.com\", \"test2.com\"];",
+											"",
+											"    for (var i = 0; i < jsonData.FreeTypeURL.length; i++) {",
+											"        pm.expect(jsonData.FreeTypeURL[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{006_ChannelAPIKey}}"
+									},
+									{
+										"key": "extendResponse",
+										"type": "text",
+										"value": "1"
+									},
+									{
+										"key": "attributes",
+										"type": "text",
+										"value": "*"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/006_API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"006_API_test_product"
+									]
+								},
+								"description": "Gets product by Primary ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product By PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c17ba1c2-d463-4b02-be56-551ce556314c",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(200);",
+											"});",
+											"",
+											"pm.test(\"message shows the deleted product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Deleted product: 006_API_test_product\");",
+											"",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{FEED_A_KEY}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/006_API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"006_API_test_product"
+									]
+								},
+								"description": "Deletes a product using the primary ID "
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "90f811fc-65dd-4e17-85e1-2ff26f31c83c",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f25e368-950d-47f8-8c14-57c0cbb1fcb3",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "007 All attributes with a source of PIMBERLY USERS cannot be populated via API Feed A",
+					"item": [
+						{
+							"name": "Create a product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "78eebde4-de2e-4ce8-be15-0e4f1446bb66",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows created product Primary ID\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Created 007_API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"007_API_test_product\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{FEED_A_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"primaryId\":\"007_API_test_product\",\n  \"typeId\":\"SKU\",\n  \"schemaId\":\"{{007_SchemaID}}\",\n  \"attributes\" : {\n  \t\n  \t\"PrimaryDescription\" : \"Updated\"\n  \t\n  \t\n  }\n\n\n\n  \n }\n"
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products",
+									"host": [
+										"{{URL_VERSION}}products"
+									]
+								},
+								"description": "Create a product using the API"
+							},
+							"response": []
+						},
+						{
+							"name": "Update product by PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "61ddb1b1-4eb9-469b-93ee-80c87c8ec35a",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows product thats been updated\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Updated 007_API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"007_API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"id exists\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.id).to.exist;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{FEED_A_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \n\t\t  \"PlainTextRegular007\": \"Text1\",\n\t\t  \"PlainTextFreeTypedList007\": [\"Text1\",\"Text2\"],\n\t\t  \"PlainTextSingleSelectList007\": \"value1\",\n\t\t  \"PlainTextMultiSelectList007\": [\"value1\",\"value2\"], \n\t\t  \"PlainTextComboList007\": \"value1\",\n\t\t  \"PlainTextSingleSelectDataset007\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextMultiSelectDataset007\": [\"ValueDEFAULT1\",\"ValueDEFAULT2\"],\n\t\t  \"PlainTextMultiComboList007\": [\"freevalue\",\"value1\"],\n\t\t  \"PlainTextComboDataset007\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextMultiComboDataset007\": [\"freevalue\",\"ValueDEFAULT1\"],\n\t\t  \"PlainTextKeyValuePairs007\": { \"key1\": \"value1\" },\n\t\t  \"Table\" : \"Table\", \n\t\t  \"CodeRegular007\": \"ABC123\",\n\t\t  \"HTMLRegular007\": \"<p>Text1</p>\",\n\t\t  \"NumberRegular007\": 1,\n\t\t  \"NumberFreeTypedList007\": [111,1],\n\t\t  \"NumberSingleSelectDataset007\": 1,\n\t\t  \"CurrencyRegular007\": 1.5,\n\t\t  \"MeasureWeightgRegular007\": 1,\n\t\t  \"DateRegular007\": \"2019-07-19\",\n\t\t  \"TimeRegular007\": \"11:00\",\n\t\t  \"DateTimeRegular007\": \"2019-07-19T11:00:00.000Z\",\n\t\t  \"TrueorFalseRegular007\": true,\n\t\t  \"MediaSet007\": \"https://s3-eu-west-1.amazonaws.com/cdn.preview.aws.eu-w1.pimberly.com/public/asset/raw/5a0edc61963a45000e888630/3992db4f/5d94adbf42d26c0017ec39bb.JPG\",\n\t\t  \"ProductSet007\": \"DNDProductToBeAdded\",\n\t\t  \"URL007\": \"test.com\",\n\t\t  \"FreeTypeURL007\": [\"test1.com\",\"test2.com\"]\n \n  \n}"
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products/007_API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"007_API_test_product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get product by Primary ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a5c635d8-50dd-4e53-b124-bb3f3c97d06a",
+										"exec": [
+											"pm.test(\"Primary ID is showing 006_API_test_product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['Primary ID']).to.eql(\"007_API_test_product\");",
+											"});",
+											"",
+											"//TESTING ATTRIBUTES ",
+											"",
+											"",
+											"// Started checking to see if value exist, which they shouldnt ",
+											"",
+											"",
+											"",
+											"//Plain Text ",
+											"",
+											"pm.test(\"PlainTextRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextRegular).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextFreeTypedList does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextFreeTypedList).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextSingleSelectList does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextSingleSelectList).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextMultiSelectList does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextMultiSelectList).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextComboList does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextComboList).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextMultiComboList does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextMultiComboList).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextSingleSelectDataset does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextSingleSelectDataset).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextComboDataset does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextComboDataset).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextMultiSelectDataset does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextMultiSelectDataset).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextMultiComboDataset does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextMultiComboDataset).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"PlainTextKey/ValuePairs does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['PlainTextKey/ValuePairs']).does.not.exist;",
+											"});",
+											"",
+											"",
+											"",
+											"// // CODE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CodeRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CodeRegular).does.not.exist;",
+											"});",
+											"",
+											"// // TABLE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"Table does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.Table).does.not.exist;",
+											"});",
+											"",
+											"",
+											"// // HTML ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"HTMLRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.HTMLRegular).does.not.exist;",
+											"});",
+											"",
+											"",
+											"",
+											"// //NUMBER ATTRIBUTES",
+											"",
+											"pm.test(\"NumberRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberRegular).does.not.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberFreeTypedList does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberFreeTypedList).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"NumberSingleSelectDataset does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberSingleSelectDataset).does.not.exist;",
+											"});",
+											"",
+											"",
+											"",
+											"// // CURRENCY ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CurrencyRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CurrencyRegular).does.not.exist;",
+											"});",
+											"",
+											"",
+											"// // MEASURE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"MeasureRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MeasureRegular).does.not.exist;",
+											"});",
+											"",
+											"",
+											"// //DATE AND TIME ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"DateRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.DateRegular).does.not.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"TimeRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TimeRegular).does.not.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"DateTimeRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[\"Date + Time\"]).does.not.exist;",
+											"});",
+											"",
+											"",
+											"",
+											"// //BOOLEAN ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"TrueorFalseRegular does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TrueorFalseRegular).does.not.exist;",
+											"});",
+											"",
+											"",
+											"// // MEDIA SET ",
+											"",
+											"",
+											"pm.test(\"MediaSet does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MediaSet).does.not.exist;",
+											"});",
+											"",
+											"",
+											"// // PRODUCT SET ",
+											"",
+											"",
+											"pm.test(\"ProductSet does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.ProductSet).does.not.exist;",
+											"});",
+											"",
+											"",
+											"",
+											"// //URL ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"URL does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.URL).does.not.exist;",
+											"});",
+											"",
+											"pm.test(\"FreeTypeURL does not exist\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.FreeTypeURL).does.not.exist;",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{007_ChannelAPIKey}}"
+									},
+									{
+										"key": "extendResponse",
+										"type": "text",
+										"value": "1"
+									},
+									{
+										"key": "attributes",
+										"type": "text",
+										"value": "*"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/007_API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"007_API_test_product"
+									]
+								},
+								"description": "Gets product by Primary ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product By PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d8a7edb1-9aaa-4320-9037-938832cfca54",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.data.status).to.eql(200);",
+											"});",
+											"",
+											"pm.test(\"message shows the deleted product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.data.message).to.eql(\"Deleted product: 007_API_test_product\");",
+											"",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{FEED_A_KEY}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/007_API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"007_API_test_product"
+									]
+								},
+								"description": "Deletes a product using the primary ID "
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "30f319ec-40ca-4649-94ca-b7d7c11a03e2",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6c197bd9-f035-4ee7-bf21-a7e4ac1fcf40",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "008 All attributes with a source of FEED A, a master of ANY, NOT populated, can be populated via API Feed A",
+					"item": [
+						{
+							"name": "Create a product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "54cd5103-7a84-4422-97d4-4f340e14dfcf",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows created product Primary ID\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Created 008_API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"008_API_test_product\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{FEED_A_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"primaryId\":\"008_API_test_product\",\n  \"typeId\":\"SKU\",\n  \"schemaId\":\"{{008_SchemaID}}\",\n  \"attributes\" : {\n  \t\n  \t\"PrimaryDescription\" : \"Updated\"\n  \t\n  \t\n  }\n\n\n\n  \n }\n"
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products",
+									"host": [
+										"{{URL_VERSION}}products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update product by PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1997c49d-0475-4026-a8df-fce6f31b07b5",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.status).to.eql(\"success\");",
+											"});",
+											"",
+											"pm.test(\"message shows product thats been updated\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.message).to.eql(\"Updated 008_API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"primaryId is correct\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.primaryId).to.eql(\"008_API_test_product\");",
+											"});",
+											"",
+											"pm.test(\"id exists\", function () {",
+											"    var jsonData = pm.response.json();",
+											"pm.expect(jsonData.data.id).to.exist;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{FEED_A_KEY}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \n\t\t  \"PlainTextRegular008\": \"Text1\",\n\t\t  \"PlainTextFreeTypedList008\": [\"Text1\",\"Text2\"],\n\t\t  \"PlainTextSingleSelectList008\": \"value1\",\n\t\t  \"PlainTextMultiSelectList008\": [\"value1\",\"value2\"], \n\t\t  \"PlainTextComboList008\": \"value1\",\n\t\t  \"PlainTextSingleSelectDataset008\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextMultiSelectDataset008\": [\"ValueDEFAULT1\",\"ValueDEFAULT2\"],\n\t\t  \"PlainTextMultiComboList008\": [\"freevalue\",\"value1\"],\n\t\t  \"PlainTextComboDataset008\": \"ValueDEFAULT1\",\n\t\t  \"PlainTextMultiComboDataset008\": [\"freevalue\",\"ValueDEFAULT1\"],\n\t\t  \"PlainTextKeyValuePairs008\": { \"key1\": \"value1\" },\n\t\t  \"Table008\" : \"Table\", \n\t\t  \"CodeRegular008\": \"ABC123\",\n\t\t  \"HTMLRegular008\": \"<p>Text1</p>\",\n\t\t  \"NumberRegular008\": 1,\n\t\t  \"NumberFreeTypedList008\": [111,1],\n\t\t  \"NumberSingleSelectDataset008\": 1,\n\t\t  \"CurrencyRegular008\": 1.5,\n\t\t  \"MeasureRegular008\": 1,\n\t\t  \"DateRegular008\": \"2019-07-19\",\n\t\t  \"TimeRegular008\": \"11:00\",\n\t\t  \"DateTimeRegular008\": \"2019-07-19T11:00:00.000Z\",\n\t\t  \"TrueorFalseRegular008\": true,\n\t\t  \"Media008\": \"5da5a3f0688c5a30a1bff4f7\",\n\t\t  \"ProductSet008\": \"5dc136f496ebf800172307f8\",\n\t\t  \"URL008\": \"test.com\",\n\t\t  \"FreeTypeURL008\": [\"test1.com\",\"test2.com\"]\n \n  \n}"
+								},
+								"url": {
+									"raw": "{{URL_VERSION}}products/008_API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"008_API_test_product"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Product by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "886eef66-ab8a-4728-8266-cccbe1122383",
+										"exec": [
+											"pm.test(\"Primary ID is showing 008_API_test_product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData['Primary ID']).to.eql(\"008_API_test_product\");",
+											"});",
+											"",
+											"//TESTING ATTRIBUTES ",
+											"",
+											"",
+											"//Plain Text ",
+											"",
+											"pm.test(\"PlainTextRegular is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextRegular).to.eql(\"Text1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextFreeTypedList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"Text1\", \"Text2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextFreeTypedList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextFreeTypedList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"PlainTextSingleSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextSingleSelectList).to.eql(\"value1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextMultiSelectList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"value1\", \"value2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextMultiSelectList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextMultiSelectList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextComboList).to.eql(\"value1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextMultiComboList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"freevalue\", \"value1\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextMultiComboList.length; i++) {",
+											"        pm.expect(jsonData.PlainTextMultiComboList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"PlainTextSingleSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextSingleSelectDataset).to.eql(\"ValueDEFAULT1\");",
+											"});",
+											"",
+											"pm.test(\"PlainTextComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.PlainTextComboDataset).to.eql(\"ValueDEFAULT1\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextMulitSelectDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"ValueDEFAULT1\", \"ValueDEFAULT2\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextMultiSelectDataset.length; i++) {",
+											"        pm.expect(jsonData.PlainTextMultiSelectDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"pm.test(\"PlainTextMultiComboDataset is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"freevalue\", \"ValueDEFAULT1\"];",
+											"",
+											"    for (var i = 0; i < jsonData.PlainTextMultiComboDataset.length; i++) {",
+											"        pm.expect(jsonData.PlainTextMultiComboDataset[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"pm.test(\"PlainTextKey/ValuePairs is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"value1\"];",
+											"",
+											"    for (var i = 0; i < jsonData['PlainTextKey/ValuePairs'].length; i++) {",
+											"        pm.expect(jsonData['PlainTextKey/ValuePairs'][i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"// CODE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CodeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CodeRegular).to.eql(\"ABC123\");",
+											"});",
+											"",
+											"// TABLE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"Table is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.Table).to.eql(\"Table\");",
+											"});",
+											"",
+											"",
+											"// HTML ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"HTMLRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.HTMLRegular).to.eql(\"<p>Text1</p>\");",
+											"});",
+											"",
+											"",
+											"",
+											"//NUMBER ATTRIBUTES",
+											"",
+											"pm.test(\"NumberRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberRegular).to.eql(1);",
+											"});",
+											"",
+											"",
+											"pm.test(\"NumberFreeTypedList is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [111, 1];",
+											"",
+											"    for (var i = 0; i < jsonData.NumberFreeTypedList.length; i++) {",
+											"        pm.expect(jsonData.NumberFreeTypedList[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"pm.test(\"NumberSingleSelectDataset is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.NumberSingleSelectDataset).to.eql(1);",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"// CURRENCY ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"CurrencyRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.CurrencyRegular).to.eql(\"1.50\");",
+											"});",
+											"",
+											"",
+											"// MEASURE ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"MeasureRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MeasureRegular).to.eql(1);",
+											"});",
+											"",
+											"",
+											"//DATE AND TIME ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"DateRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.DateRegular).to.eql(\"2019/07/19\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"TimeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TimeRegular).to.eql(\"11:00\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"DateTimeRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[\"Date + Time\"]).to.eql(\"2019/07/19 11:00\");",
+											"});",
+											"",
+											"",
+											"",
+											"//BOOLEAN ATTRIBUTE",
+											"",
+											"",
+											"pm.test(\"TrueorFalseRegular is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.TrueorFalseRegular).to.eql(\"1\");",
+											"});",
+											"",
+											"",
+											"// MEDIA SET ",
+											"",
+											"",
+											"pm.test(\"MediaSet is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.MediaSet[0]).to.eql(\"https://cdn.preview.pimber.ly/public/asset/raw/5a0edc61963a45000e888630/7d531b65/5d7607c08dcb2b5efa000010.jpg\");",
+											"});",
+											"",
+											"",
+											"// PRODUCT SET ",
+											"",
+											"",
+											"pm.test(\"ProductSet is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.ProductSet[0]).to.eql(\"DNDProductToBeAdded\");",
+											"});",
+											"",
+											"",
+											"",
+											"//URL ATTRIBUTES",
+											"",
+											"",
+											"pm.test(\"URL is showing a valid value\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.URL).to.eql(\"test.com\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"FreeTypeURL is showing valid values\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var strings = [\"test1.com\", \"test2.com\"];",
+											"",
+											"    for (var i = 0; i < jsonData.FreeTypeURL.length; i++) {",
+											"        pm.expect(jsonData.FreeTypeURL[i]).to.eql(strings[i]);",
+											"    }",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{008_ChannelAPIKey}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/008_API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"008_API_test_product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product by PrimaryID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "94b93891-865a-42e9-9393-d620d91b4112",
+										"exec": [
+											"pm.test(\"status is successful\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.data.status).to.eql(200);",
+											"});",
+											"",
+											"pm.test(\"message shows the deleted product\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.data.message).to.eql(\"Deleted product: 008_API_test_product\");",
+											"",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{FEED_A_KEY}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_VERSION}}products/008_API_test_product",
+									"host": [
+										"{{URL_VERSION}}products"
+									],
+									"path": [
+										"008_API_test_product"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "Tests that are able to be run to test the system",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "09d39981-91b0-465b-9909-2eab1ddc1141",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8578df99-f84a-4275-be9a-5d580511a1d2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "95e81853-5afd-4452-b7f7-0a93f3866bcb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1d96e2a3-5284-4238-a540-0c1a71bf8255",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

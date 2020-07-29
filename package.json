@@ -1,0 +1,13 @@
+{
+  "name": "postman",
+  "version": "1.0.0",
+  "description": "Pimberly project",
+  "scripts": {
+    "run-tests": "newman run PimberlyQAenviro_tests.postman_collection.json -e Preview.postman_environment.json"
+  },
+  "author": "James Long",
+  "license": "ISC",
+  "dependencies": {
+    "newman": "^5.1.2"
+  }
+}
